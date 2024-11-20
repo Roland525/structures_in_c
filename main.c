@@ -11,9 +11,6 @@ struct students {
 
 int load(struct students** studenti) {
     FILE* fp = fopen("students.txt", "r");
-    if (!fp){
-    return 0;
-    } 
     int n = 0;
     struct students temp;
     while (fscanf(fp, "%d %s %s %s", &temp.age, temp.name, temp.sname, temp.className) == 4) {
@@ -30,23 +27,6 @@ void save(struct students* studenti, int n) {
         fprintf(fp, "%d %s %s %s\n", studenti[i].age, studenti[i].name, studenti[i].sname, studenti[i].className);
     }
     fclose(fp);
-}
-
-void sort(struct students* studenti, int n, int option) {
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = 0; j < n - i - 1; j++) {
-            int cmp = 0;
-            if (option == 1) cmp = strcmp(studenti[j].name, studenti[j + 1].name);
-            else if (option == 2) cmp = strcmp(studenti[j].sname, studenti[j + 1].sname);
-            else if (option == 3) cmp = studenti[j].age - studenti[j + 1].age;
-
-            if (cmp > 0) {
-                struct students temp = studenti[j];
-                studenti[j] = studenti[j + 1];
-                studenti[j + 1] = temp;
-            }
-        }
-    }
 }
 
 void add() {
@@ -73,7 +53,7 @@ void showstudents() {
     printf("choose sorting option:\n1 - name\n2 - surname\n3 - age\n");
     scanf("%d", &option);
 
-    sort(studenti, n, option);
+    bublesort(studenti, n, option);
     char userclass[50];
     printf("enter class (px-22, px-23, px-24): ");
     scanf("%s", userclass);
@@ -87,22 +67,33 @@ void showstudents() {
     free(studenti);
 }
 
+void bublesort(struct students* studenti, int n, int option) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            int cmp = 0;
+            if (option == 1) cmp = strcmp(studenti[j].name, studenti[j + 1].name);
+            else if (option == 2) cmp = strcmp(studenti[j].sname, studenti[j + 1].sname);
+            else if (option == 3) cmp = studenti[j].age - studenti[j + 1].age;
+
+            if (cmp > 0) {
+                struct students temp = studenti[j];
+                studenti[j] = studenti[j + 1];
+                studenti[j + 1] = temp;
+            }
+        }
+    }
+}
+
 void change_student() {
     struct students* studenti = NULL;
     int n = load(&studenti);
-    if (n == 0) {
-        printf("no student data available.\n");
-        return;
-    }
-
     char userclass[50];
     printf("enter class (px-22, px-23, px-24): ");
     scanf("%s", userclass);
 
     for (int i = 0; i < n; i++) {
         if (strcmp(studenti[i].className, userclass) == 0) {
-            printf("%d - name: %s, surname: %s, age: %d, class: %s\n",
-                   i, studenti[i].name, studenti[i].sname, studenti[i].age, studenti[i].className);
+            printf("%d - name: %s, surname: %s, age: %d, class: %s\n",i, studenti[i].name, studenti[i].sname, studenti[i].age, studenti[i].className);
         }
     }
 
@@ -123,14 +114,9 @@ void change_student() {
     free(studenti);
 }
 
-// удаление студента
 void delete_student() {
     struct students* studenti = NULL;
     int n = load(&studenti);
-    if (n == 0) {
-        printf("no student data available.\n");
-        return;
-    }
 
     char userclass[50];
     printf("enter class (px-22, px-23, px-24): ");
