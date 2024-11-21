@@ -53,7 +53,7 @@ void showstudents() {
     printf("choose sorting option:\n1 - name\n2 - surname\n3 - age\n");
     scanf("%d", &option);
 
-    bublesort(studenti, n, option);
+    sortirovka(studenti, n, option);
     char userclass[50];
     printf("enter class (px-22, px-23, px-24): ");
     scanf("%s", userclass);
@@ -67,7 +67,7 @@ void showstudents() {
     free(studenti);
 }
 
-void bublesort(struct students* studenti, int n, int option) {
+void sortirovka(struct students* studenti, int n, int option) {
     for (int i = 0; i < n - 1; i++) {
         for (int j = 0; j < n - i - 1; j++) {
             int cmp = 0;
@@ -96,7 +96,6 @@ void change_student() {
             printf("%d - name: %s, surname: %s, age: %d, class: %s\n",i, studenti[i].name, studenti[i].sname, studenti[i].age, studenti[i].className);
         }
     }
-
     int index;
     printf("enter student index to change: ");
     scanf("%d", &index);
@@ -128,7 +127,6 @@ void delete_student() {
                    i, studenti[i].name, studenti[i].sname, studenti[i].age, studenti[i].className);
         }
     }
-
     int index;
     printf("enter student index to delete: ");
     scanf("%d", &index);
@@ -141,7 +139,6 @@ void delete_student() {
     save(studenti, n);
     free(studenti);
 }
-
 int main() {
     int choose = 0;
 
@@ -157,8 +154,7 @@ int main() {
             delete_student();
         } else if (choose == 4) {
             showstudents();
+        }
     }
-
     return 0;
-}
 }
