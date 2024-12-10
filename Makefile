@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c99
 
-SRCS = main.c file_load.c file_save.c student_add.c student_sorting.c change_show_delete.c
+SRCS = main.c file_change.c student_add.c student_sorting.c student_change.c
 OBJS = $(SRCS:.c=.o)
 
 all: main

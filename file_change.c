@@ -1,4 +1,4 @@
-#include "file_load.h"
+#include "file_change.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include "students.h"
@@ -13,4 +13,11 @@ int load(struct students** studenti) {
     }
     fclose(fp);
     return n;
+}
+void save(struct students* studenti, int n) {
+    FILE* fp = fopen("students.txt", "w");
+    for (int i = 0; i < n; i++) {
+        fprintf(fp, "%d %s %s %s\n", studenti[i].age, studenti[i].name, studenti[i].sname, studenti[i].className);
+    }
+    fclose(fp);
 }
