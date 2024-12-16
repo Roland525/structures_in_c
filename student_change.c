@@ -5,52 +5,58 @@
 #include <stdlib.h>
 #include <string.h>
 
-void change_student(const char* className) {
+void change_student(int argc, char* argv[]) {
     struct students* studenti = NULL;
     int n = load(&studenti);
+    int index = -1;
+
     for (int i = 0; i < n; i++) {
-        if (strcmp(studenti[i].className, className) == 0) {
-            printf("%d - name: %s, surname: %s, age: %d, class: %s\n", 
-                   i, studenti[i].name, studenti[i].sname, studenti[i].age, studenti[i].className);
+        if (strcmp(studenti[i].name, argv[2]) == 0 && 
+            strcmp(studenti[i].sname, argv[3]) == 0 && 
+            studenti[i].age == atoi(argv[4]) &&
+            strcmp(studenti[i].className, argv[5]) == 0) {
+            index = i;
+            break;
         }
     }
-    int index;
-    printf("enter student index to change: ");
-    scanf("%d", &index);
 
-    printf("enter new name: ");
-    scanf("%s", studenti[index].name);
-    printf("enter new surname: ");
-    scanf("%s", studenti[index].sname);
-    printf("enter new age: ");
-    scanf("%d", &studenti[index].age);
-    printf("enter new class (px-22, px-23, px-24): ");
-    scanf("%s", studenti[index].className);
+    if (index == -1) {
+        printf("student not found.\n");
+        free(studenti);
+        return;
+    }
+
+    strcpy(studenti[index].name, argv[6]);
+    strcpy(studenti[index].sname, argv[7]);
+    studenti[index].age = atoi(argv[8]);
+    strcpy(studenti[index].className, argv[9]);
 
     save(studenti, n);
     free(studenti);
+    printf("student updated.\n");
 }
 
-
-void delete_student(const char* className) {
+void delete_student(int argc, char* argv[]) {
     struct students* studenti = NULL;
     int n = load(&studenti);
-    
+    int index = -1;
+
     for (int i = 0; i < n; i++) {
-        if (strcmp(studenti[i].className, className) == 0) {
-            printf("%d - name: %s, surname: %s, age: %d, class: %s\n",
-                   i, studenti[i].name, studenti[i].sname, studenti[i].age, studenti[i].className);
+        if (strcmp(studenti[i].name, argv[2]) == 0 && 
+            strcmp(studenti[i].sname, argv[3]) == 0 && 
+            studenti[i].age == atoi(argv[4]) && 
+            strcmp(studenti[i].className, argv[5]) == 0) {
+            index = i;
+            break;
         }
     }
-    int index;
-    printf("enter student index to delete: ");
-    scanf("%d", &index);
-
     for (int i = index; i < n - 1; i++) {
         studenti[i] = studenti[i + 1];
     }
-    n--;
+    n--; 
 
     save(studenti, n);
     free(studenti);
+
+    printf("student deleted\n");
 }

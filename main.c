@@ -40,11 +40,11 @@ int main(int argc, char* argv[]) {
         }
         free(studenti);
     } 
-    else if (strcmp(argv[1], "change") == 0 && argc == 3) {
-        change_student(argv[2]);
+    else if (strcmp(argv[1], "change") == 0 && argc == 10) {
+        change_student(argc, argv);
     } 
-    else if (strcmp(argv[1], "delete") == 0 && argc == 3) {
-        delete_student(argv[2]);
+    else if (strcmp(argv[1], "delete") == 0) {
+        delete_student(argc, argv);
     } 
     return 0;
 }
