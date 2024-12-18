@@ -19,7 +19,6 @@ void change_student(int argc, char* argv[]) {
             break;
         }
     }
-
     if (index == -1) {
         printf("student not found.\n");
         free(studenti);
